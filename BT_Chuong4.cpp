@@ -29,6 +29,8 @@ void inputTail(linkedList &l, int iN);
 void output(linkedList l);
 bool kiemTraSNT(int nX);
 void outputSNT(linkedList l);
+void deleteHead(linkedList &l);
+void deleteHeadKtime(linkedList &l, int nK);
 
 //Ham main
 int main() {
@@ -41,10 +43,28 @@ int main() {
 
 	output(l);
 
-	outputSNT(l);
+	//outputSNT(l);
+
+	deleteHeadKtime(l, 3);
+
+	output(l);
 
 	system("pause");
 	return 0;
+}
+
+void deleteHeadKtime(linkedList &l, int nK) {
+	while (nK--) {
+		deleteHead(l);
+	}
+}
+
+void deleteHead(linkedList &l) {
+	if (l.pHead == NULL) return;
+	Node *p = l.pHead;
+	l.pHead = p->pNext;
+	if (l.pHead == NULL) l.pTail = NULL;
+	delete p;
 }
 
 void outputSNT(linkedList l) {
