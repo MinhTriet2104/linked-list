@@ -1,2 +1,2 @@
 # linked-list
-LinkedList
+## LinkedList C++
