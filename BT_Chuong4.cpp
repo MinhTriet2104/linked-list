@@ -27,6 +27,8 @@ Node* createNode(int nX);
 void addTail(linkedList &l, int nX);
 void inputTail(linkedList &l, int iN);
 void output(linkedList l);
+bool kiemTraSNT(int nX);
+void outputSNT(linkedList l);
 
 //Ham main
 int main() {
@@ -39,7 +41,31 @@ int main() {
 
 	output(l);
 
+	outputSNT(l);
+
 	system("pause");
+	return 0;
+}
+
+void outputSNT(linkedList l) {
+	for (Node *i = l.pHead; i != NULL; i = i->pNext) {
+		if (kiemTraSNT(i->nData)) {
+			cout << i->nData << " ";
+		}		
+	}
+	cout << endl;
+}
+
+bool kiemTraSNT(int nX) {
+	int count = 0;
+	for (int i = 1; i <= nX; i++) {
+		if (nX % i == 0) {
+			count++;
+		}
+	}
+	if (count == 2) {
+		return 1;
+	}
 	return 0;
 }
 
