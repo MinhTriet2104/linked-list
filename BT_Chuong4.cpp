@@ -31,6 +31,10 @@ bool kiemTraSNT(int nX);
 void outputSNT(linkedList l);
 void deleteHead(linkedList &l);
 void deleteHeadKtime(linkedList &l, int nK);
+int size(linkedList l);
+Node *doAdvance(linkedList l, int nViTri);
+void doErase(linkedList &l, int nViTri);
+void deleteRepeat(linkedList &l);
 
 //Ham main
 int main() {
@@ -41,16 +45,72 @@ int main() {
 	linkedList l;
 	inputTail(l, iN);
 
-	output(l);
+	//output(l);
 
 	//outputSNT(l);
 
-	deleteHeadKtime(l, 3);
+	//deleteHeadKtime(l, 3);
 
+	cout << "\n- Before: \n";
+	output(l);
+
+	cout << "Size: " << size(l) << endl;
+
+	doErase(l, 0);
+
+	cout << "\n- After: \n";
 	output(l);
 
 	system("pause");
 	return 0;
+}
+
+void doErase(linkedList &l, int nViTri) {
+	if (l.pHead == NULL) return;
+	if (nViTri < 1 || nViTri > size(l)) return;
+
+	if (nViTri == 1) {
+		Node *p = l.pHead;
+		l.pHead = p->pNext;
+
+		if(l.pHead == NULL) l.pTail = NULL;
+
+		delete p;
+	} else {
+		Node *q = doAdvance(l, nViTri - 1);
+		Node *p = doAdvance(l, nViTri);
+
+		q->pNext = p->pNext;
+
+		if (p == l.pTail) l.pTail = q;
+
+		delete p;
+	}
+}
+
+Node *doAdvance(linkedList l, int nViTri) {
+	if (nViTri < 1 || nViTri > size(l)) return NULL;
+
+	Node *p = l.pHead;
+	int i = 1;
+	while (i < nViTri) {
+		p = p->pNext;
+		i++;
+	}
+
+	return p;
+}
+
+int size(linkedList l) {
+	Node *p = l.pHead;
+	int count = 0;
+
+	while(p != NULL) {
+		count++;
+		p = p->pNext;
+	}
+
+	return count;
 }
 
 void deleteHeadKtime(linkedList &l, int nK) {
@@ -61,18 +121,26 @@ void deleteHeadKtime(linkedList &l, int nK) {
 
 void deleteHead(linkedList &l) {
 	if (l.pHead == NULL) return;
+
 	Node *p = l.pHead;
+
 	l.pHead = p->pNext;
+
 	if (l.pHead == NULL) l.pTail = NULL;
+
 	delete p;
 }
 
 void outputSNT(linkedList l) {
+
 	for (Node *i = l.pHead; i != NULL; i = i->pNext) {
+
 		if (kiemTraSNT(i->nData)) {
 			cout << i->nData << " ";
 		}		
+
 	}
+
 	cout << endl;
 }
 
