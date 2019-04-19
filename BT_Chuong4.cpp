@@ -39,15 +39,16 @@ int countTimeAppear(linkedList l, int nX);
 Node *doAdvanceOpposite(linkedList l, int nViTri);
 void insertSortedList(linkedList &l, int nX);
 void swapList(linkedList &l);
+bool compareList(linkedList l1, linkedList l2);
 
 //Ham main
 int main() {
-	int iN;
-	cout << "Input amount: ";
-	cin >> iN;
+	//int iN;
+	//cout << "Input amount: ";
+	//cin >> iN;
 
-	linkedList l;
-	inputTail(l, iN);
+	//linkedList l;
+	//inputTail(l, iN);
 
 	//output(l);
 
@@ -55,12 +56,12 @@ int main() {
 
 	//deleteHeadKtime(l, 3);
 
-	cout << "\n- Before: \n";
-	output(l);
+	//cout << "\n- Before: \n";
+	//output(l);
 
 	//cout << "Size: " << size(l) << endl;
 
-	deleteRepeat(l);
+	//deleteRepeat(l);
 
 	//Node *p = doAdvanceOpposite(l, 2);
 	//cout << "Data: " << p->nData << endl;
@@ -73,12 +74,40 @@ int main() {
 
 	//swapList(l);
 
-	cout << "\n- After: \n";
-	output(l);
-	cout << "Tail: " << l.pTail->nData << endl;
+	//cout << "\n- After: \n";
+	//output(l);
+	//cout << "Tail: " << l.pTail->nData << endl;
+
+	linkedList l1;
+	linkedList l2;
+
+	int iN;
+	cout << "Input amount l1: ";
+	cin >> iN;
+
+	inputTail(l1, iN);
+
+	cout << "Input amount l2: ";
+	cin >> iN;
+
+	inputTail(l2, iN);
+
+	cout << compareList(l1, l2) << endl;
 
 	system("pause");
 	return 0;
+}
+
+bool compareList(linkedList l1, linkedList l2) {
+	if (size(l1) != size(l2)) return 0;
+	Node *j = l2.pHead;
+	for (Node *i = l1.pHead; i != NULL; i = i->pNext) {
+		if (i->nData != j->nData) {
+			return 0;
+		}
+		j = j->pNext;
+	}
+	return 1;
 }
 
 void swapList(linkedList &l) {
