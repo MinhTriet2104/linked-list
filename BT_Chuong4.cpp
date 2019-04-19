@@ -35,6 +35,10 @@ int size(linkedList l);
 Node *doAdvance(linkedList l, int nViTri);
 void doErase(linkedList &l, int nViTri);
 void deleteRepeat(linkedList &l);
+int countTimeAppear(linkedList l, int nX);
+Node *doAdvanceOpposite(linkedList l, int nViTri);
+void insertSortedList(linkedList &l, int nX);
+void swapList(linkedList &l);
 
 //Ham main
 int main() {
@@ -54,15 +58,90 @@ int main() {
 	cout << "\n- Before: \n";
 	output(l);
 
-	cout << "Size: " << size(l) << endl;
+	//cout << "Size: " << size(l) << endl;
 
-	doErase(l, 0);
+	//Node *p = doAdvanceOpposite(l, 2);
+	//cout << "Data: " << p->nData << endl;
+
+	//doErase(l, 0);
+
+	//cout << countTimeAppear(l, 2) << endl;
+
+	insertSortedList(l, 4);
+
+	//swapList(l);
 
 	cout << "\n- After: \n";
 	output(l);
+	cout << "Tail: " << l.pTail->nData << endl;
 
 	system("pause");
 	return 0;
+}
+
+void swapList(linkedList &l) {
+	for (Node *i = l.pHead; i != NULL && i->pNext != NULL; i = i->pNext->pNext) {
+		swap(i->nData, i->pNext->nData);
+	}
+}
+
+void insertSortedList(linkedList &l, int nX) {
+	Node *pNew = createNode(nX);
+	if (nX < l.pHead->nData) {
+		pNew->pNext = l.pHead;
+		l.pHead = pNew;
+		return;
+	}
+	if (nX > l.pTail->nData) {
+		l.pTail->pNext = pNew;
+		l.pTail = pNew;
+		return;
+	}
+	int i = 1;
+	for (Node *p = l.pHead; p != NULL;) {
+		if (nX > p->nData) {
+			i++;
+			p = p->pNext;	
+		}
+		else {
+			Node *q = doAdvance(l, i - 1);
+			pNew->pNext = q->pNext;
+			q->pNext = pNew;
+			break;
+		}
+	}
+}
+
+Node *doAdvanceOpposite(linkedList l, int nViTri) {
+	if (nViTri < 1 || nViTri > size(l)) return NULL;
+
+	Node *p = l.pHead;
+	int i = size(l);
+	while (i > nViTri) {
+		p = p->pNext;
+		i--;
+	}
+
+	return p;
+}
+
+int countTimeAppear(linkedList l, int nX) {
+	int count = 0;
+
+	for (Node *i = l.pHead; i != NULL; i = i->pNext) {
+		if (i->nData == nX) count++;
+	}
+
+	return count;
+}
+
+void deleteRepeat(linkedList &l) {
+	for (Node *i = l.pHead; i->pNext != NULL; i = i->pNext) {
+		int iData = i->nData;
+		for (Node *j = i->pNext; j != NULL;) {
+
+		}
+	}
 }
 
 void doErase(linkedList &l, int nViTri) {
