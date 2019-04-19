@@ -60,6 +60,8 @@ int main() {
 
 	//cout << "Size: " << size(l) << endl;
 
+	deleteRepeat(l);
+
 	//Node *p = doAdvanceOpposite(l, 2);
 	//cout << "Data: " << p->nData << endl;
 
@@ -67,7 +69,7 @@ int main() {
 
 	//cout << countTimeAppear(l, 2) << endl;
 
-	insertSortedList(l, 4);
+	//insertSortedList(l, 4);
 
 	//swapList(l);
 
@@ -136,11 +138,20 @@ int countTimeAppear(linkedList l, int nX) {
 }
 
 void deleteRepeat(linkedList &l) {
-	for (Node *i = l.pHead; i->pNext != NULL; i = i->pNext) {
-		int iData = i->nData;
-		for (Node *j = i->pNext; j != NULL;) {
-
+	for (Node *i = l.pHead; i != NULL; i = i->pNext) {
+		Node *q = i;
+		while (q != NULL && q->pNext != NULL) {
+			if (q->pNext->nData == i->nData) {
+				Node *p = q->pNext;
+				q->pNext = p->pNext;
+				if (p == l.pTail) l.pTail = q;
+				delete p;
+			}
+			else {
+				q = q->pNext;
+			}
 		}
+
 	}
 }
 
